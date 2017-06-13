@@ -23,14 +23,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-      count: '8888'
-    }
-  },
+  computed: mapState({
+    count: state => state.count,
+    msg: state => state.msg
+  }),
   methods: {
     testDb: function () {
       console.log('come in')

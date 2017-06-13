@@ -5,6 +5,7 @@ Vue.use(Vuex)
 Vue.use(VueResource)
 export default new Vuex.Store({
   state: {
+    msg: 'kkk',
     count: '9999'
   },
   actions: {
