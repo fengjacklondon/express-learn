@@ -5,6 +5,7 @@ import VueResource from 'vue-resource'
 import App from './App'
 import router from './router'
 import store from './store/store'
+import Navigation from './components/Navigation'
 
 Vue.config.productionTip = false
 /* 添加后解决  Cannot read property 'post' of undefined 报错问题 */
@@ -17,5 +18,5 @@ new Vue({
   store,
   VueResource,
   template: '<App/>',
-  components: { App }
+  components: {App, Navigation}
 })
