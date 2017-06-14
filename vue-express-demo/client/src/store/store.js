@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
-Vue.use(Vuex)
 Vue.use(VueResource)
+Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     msg: 'kkk',
@@ -11,7 +11,10 @@ export default new Vuex.Store({
   actions: {
     count (context) {
       console.log('575775')
-      context.commit('countRecord', 'mock')
+      Vue.http.get('/api').then((response) => {
+        console.log('111111' + response)
+        context.commit('countRecord', 'mock')
+      })
     }
   },
   mutations: {

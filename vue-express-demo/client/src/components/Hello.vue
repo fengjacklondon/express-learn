@@ -25,6 +25,12 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  /* data () {
+    return {
+      msg: 'init',
+      count: 0
+    }
+  }, */
   computed: mapState({
     count: state => state.count,
     msg: state => state.msg
