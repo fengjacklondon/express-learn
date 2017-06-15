@@ -6,7 +6,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     msg: 'kkk',
-    count: '9999'
+    count: '9999',
+    conf: {
+      website: {
+        title: '喜剧之王'
+      }
+    }
   },
   actions: {
     count (context) {

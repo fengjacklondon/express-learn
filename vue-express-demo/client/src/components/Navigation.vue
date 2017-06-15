@@ -1,5 +1,6 @@
 <template>
 	<div id="div-nav" class="navbar navbar-static-top navbar-dark bg-inverse">
+  <a  class="navabar-brand" href="/">{{title}}</a>
 		<ul class="nav navbar-nav">
 			<li class="nav-item"  v-for="menuItem ,index in menu">
 				<a class="nav-link" :href="menuItem.link">{{menuItem.text}}</a>
@@ -14,7 +15,7 @@
 	}
 </style>
 <script >
-// import {mapState} from 'vuex'
+import {mapState} from 'vuex'
 export default {
   name: 'navigation',
   data () {
@@ -27,6 +28,9 @@ export default {
         {link: '#contact', text: '联系'}
       ]
     }
-  }
+  },
+  computed: mapState({
+    title: state => state.conf.website.title
+  })
 }
 </script>
