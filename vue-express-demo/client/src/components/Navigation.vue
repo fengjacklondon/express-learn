@@ -1,9 +1,9 @@
 <template>
 	<div id="div-nav" class="navbar navbar-static-top navbar-dark bg-inverse">
-  <a  class="navabar-brand" href="/">{{title}}</a>
+  <a  class="navbar-brand" href="/">{{title}}</a>
 		<ul class="nav navbar-nav">
-			<li class="nav-item"  v-for="menuItem ,index in menu">
-				<a class="nav-link" :href="menuItem.link">{{menuItem.text}}</a>
+			<li class="nav-item" :class="{'active':isActivite(menuItem)}" v-for="menuItem ,index in menu">
+				<a class="nav-link" :href="menuItem.link" @click="changeItem" >{{menuItem.text}}</a>
 			</li>
 		</ul>
 	</div>
@@ -31,6 +31,16 @@ export default {
   },
   computed: mapState({
     title: state => state.conf.website.title
-  })
+  }),
+  methods: {
+    changeItem: function(e) {
+      var parentNavItem = {text: e.target.text, link: e.target.href};
+      this.$store.dispatch( 'parentNavItemChange', parentNavItem);
+
+    }
+    isActivite: function (menuItem) {
+      return this.$store.state.parentNavItem.text === menuItem.text
+    }
+  }
 }
 </script>
