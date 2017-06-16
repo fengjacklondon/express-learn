@@ -1,7 +1,9 @@
 <template>
   <div id="app" class="container">
     <router-view></router-view>
+     <router-view name="location"></router-view>
     <router-view name="sider"></router-view>
+
   </div>
 </template>
 

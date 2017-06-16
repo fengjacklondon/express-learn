@@ -33,11 +33,10 @@ export default {
     title: state => state.conf.website.title
   }),
   methods: {
-    changeItem: function(e) {
-      var parentNavItem = {text: e.target.text, link: e.target.href};
-      this.$store.dispatch( 'parentNavItemChange', parentNavItem);
-
-    }
+    changeItem: function (e) {
+      var parentNavItem = {text: e.target.text, link: e.target.href}
+      this.$store.dispatch('parentNavItemChange', parentNavItem)
+    },
     isActivite: function (menuItem) {
       return this.$store.state.parentNavItem.text === menuItem.text
     }
