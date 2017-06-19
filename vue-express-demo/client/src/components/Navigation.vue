@@ -20,6 +20,7 @@
 	{
 		margin-top: 10px; margin-bottom: 10px; background-color: #0099F0; 
 	}
+
 </style>
 <script >
 import Location from './Location'
