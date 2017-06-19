@@ -5,9 +5,9 @@ import VueResource from 'vue-resource'
 import App from './App'
 import router from './router'
 import store from './store/store'
-import Navigation from './components/Navigation'
+/* import Navigation from './components/Navigation'
 import Sider from './components/Sider'
-import Location from './components/Location'
+import Location from './components/Location' */
 import 'bootstrap/dist/css/bootstrap.css'
 
 Vue.config.productionTip = false
@@ -21,5 +21,6 @@ new Vue({
   store,
   VueResource,
   template: '<App/>',
-  components: {App, Navigation, Location, Sider}
+  // components: {App, Navigation, Location, Sider}
+  components: {App}
 })

@@ -5,7 +5,7 @@ Vue.use(VueResource)
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
-    parentNavItem: {text: '文章', link: '#article'},
+    parentNavItem: {text: '文章', link: '/article'},
     childNavItem: {text: '全部', link: '#'},
     msg: 'kkk',
     count: '9999',

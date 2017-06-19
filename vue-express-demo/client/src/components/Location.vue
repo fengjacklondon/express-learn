@@ -2,7 +2,7 @@
   <div id="div-location" class="col-lg-9">
     <ol class="breadcrumb">
     	<li><a href="/">主页</a></li>
-    	<li><a :href="parentNavItemLink">{{parentNavItemText}}</a></li>
+    	<li> <router-link :to="parentNavItemLink">{{parentNavItemText}} </router-link> </li>
     	<li class="active">{{childNavItemText}}</li>
     </ol>
   </div>
@@ -14,7 +14,7 @@
 	}
 </style>
 <script>
-import { mapState } from 'vuex'
+import {mapState} from 'vuex'
 export default {
   computed: mapState({
     parentNavItemText: state => state.parentNavItem.text,
