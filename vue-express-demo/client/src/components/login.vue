@@ -1,27 +1,16 @@
 <template>
-<div class="col-lg-9" v-show="isShow" id="div-login">
-  <div class="card card-border col-lg-offset-3 col-lg-6 text-center">
-    <div class="img-circle img-thumbnail img-responsive" id="div-login-logo">
-      <i class="fa fa-4x fa-rocket" aria-hidden="true"></i>
+<div class="col-lg-6 text-center">
+  <form  class="form-horizontal">
+    <div class="form-group">
+      <label for="exampleInputName">Name</label>
+      <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" v-model="user.name">
     </div>
-    <div class="card-block">
-      <h4 class="card-title">登陆</h4>
-      <form id="div-form">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-1x fa-user" aria-hidden="true"></i></span>
-          <input type="text" class="form-control" id="input-name" placeholder="用户名" v-model=" user.name">
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-1x fa-lock" aria-hidden="true"></i></span>
-          <input type="password" class="form-control" id="input-password" placeholder="密码" v-model="user.password">
-        </div>
-      </form>
+     <div class="form-group">
+      <label for="examplePassword">Name</label>
+      <input type="text" class="form-control" id="examplePassword" placeholder="Password" v-model="user.password">
     </div>
-    <div class="card-block">
-      <a href="#" class="btn btn-primary" @click="login()">立即登陆sss</a><br>
-      <a href="#" class="card-link text-right">忘记密码?</a>
-    </div>
-  </div>
+    <button type="submit" class="btn btn-default" @click="login()">Submit</button>
+  </form>
 </div>
 </template>
 <style type="text/css">
@@ -40,7 +29,7 @@
  }
 </style>
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -50,13 +39,12 @@ export default {
       }
     }
   },
-  computed: mapState({
-    isShow: state => (state.parentNavItem.text === '管理') && (!state.loginState)
-  }),
   methods: {
     login: function () {
+      console.log('6666')
       this.$store.dispatch('login', this.user)
     }
   }
 }
 </script>
+
