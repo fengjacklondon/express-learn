@@ -3,7 +3,7 @@ var mysql = require('mysql');
 var pool  = mysql.createPool({  
   connectionLimit : 10,  
   host :'localhost',  
-  port :4706,
+  port :3306,
   user : 'root',  
   password : 'Wewechat',  
   database : 'db_blog'  
@@ -36,16 +36,21 @@ db.query = function(sql, callback){
  * @return {[type]}
  */
 db.search = function (table,fields,condition,range,callback){
-  var sqlString = ``;
+  var condition = '1=1' 
+  var sqlString = '';
   console.log('dbdbdbdbd')
   if(range){
-    sqlString = `select ${fields} from ${table} where  ${condition} limit ${range.from}, ${range.count}; `
+    sqlString = 'select count(*) as count from tb_user;'
   }else{
      sqlString = `select ${fields} from ${table} where ${condition};`
   }
   console.log(sqlString)
-  query(sqlString,function(err,result){
-     callback(err,result)
+  this.query(sqlString,function(err,rows,fields){
+     if (err) {  
+        console.log(err);  
+        return;  
+    }
+    console.log('用户数量 : ', rows[0].count);  
   });
 
 

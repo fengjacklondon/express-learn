@@ -2,15 +2,15 @@ var express = require('express');
 var router = express.Router();
 var session = require ('express-session')
 var md5 = require('md5')
-// var db = require('../db.js');
+var db = require('../service/db.js');
 var utility = require('../utility/utility.js')
 var sql = 'select count(*) as count from tb_user' ;
 var user = require('../service/user.js')
 
 
-router.get('/', (req, res) => {
+// router.get('/', (req, res) => {
 
-    console.log(99999999)
+//     console.log(99999999)
 // 	var result = 10
 // 	db.query(sql, function(err, rows, fields){  
 //     if (err) {  
@@ -22,9 +22,12 @@ router.get('/', (req, res) => {
 //     res.json({ result: result })
    
 // });  
-    
+
+
+    router.get('/', (req, res) => {
+
     var params = req.query;
-    console.log('params:' + params)
+    console.log('params:' + params.name)
     switch(params.action) {
         case 'user-login':
             var fields = 'name' ;
@@ -52,7 +55,7 @@ router.get('/', (req, res) => {
             break
 
     }
-	
+   
 });
-
+    
 module.exports = router;
