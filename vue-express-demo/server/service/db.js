@@ -3,13 +3,13 @@ var mysql = require('mysql');
 var pool  = mysql.createPool({  
   connectionLimit : 10,  
   host :'localhost',  
-  port :3306,
+  port :4706,
   user : 'root',  
   password : 'Wewechat',  
   database : 'db_blog'  
 });  
-  
-db.query = function(sql, callback){  
+
+/*db.query = function(sql, callback){  
   
     if (!sql) {  
         callback();  
@@ -24,8 +24,23 @@ db.query = function(sql, callback){
   
       callback(null, rows, fields);  
     });  
-}  
+}  */
 
+
+db.query = function (sql,callback){
+  pool.getConnection(function(err,connection)
+  {
+    if(!err){
+      connection.query(sql, function(err, result){
+          connection.release()
+          callback(err,result)
+      })
+    } else {
+        callback(err,sql)
+    }
+    return err;
+  })
+}
 
 /**
  * @param  {[String]} table:表名
@@ -36,24 +51,17 @@ db.query = function(sql, callback){
  * @return {[type]}
  */
 db.search = function (table,fields,condition,range,callback){
-  var condition = '1=1' 
   var sqlString = '';
   console.log('dbdbdbdbd')
   if(range){
-    sqlString = 'select count(*) as count from tb_user;'
+    sqlString = `select ${fields}  from  ${table} where ${condition} limit ${range.from}, ${range.count} ; `
   }else{
      sqlString = `select ${fields} from ${table} where ${condition};`
   }
   console.log(sqlString)
-  this.query(sqlString,function(err,rows,fields){
-     if (err) {  
-        console.log(err);  
-        return;  
-    }
-    console.log('用户数量 : ', rows[0].count);  
+  this.query(sqlString,function(err, result){
+    callback(err, result)
   });
-
-
 }
 
 

@@ -44,7 +44,8 @@ export default new Vuex.Store({
     login (state, user) {
       console.log(user)
       Vue.http.get(`/api?action=user-login&name=${user.name}&password=${user.password}`).then((response) => {
-        var data = response.json(response.body)
+        var data = response.body
+        // response.json(response.body)
         console.log(data)
         console.log(10000)
         if (!data.err) {

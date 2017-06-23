@@ -40,7 +40,7 @@ var user = require('../service/user.js')
             var range = {from : 0, count: 1}
             user.search(fields, conditionString, range, (err, result)=> {
                 if(!err && result.length){
-                    consol.log(result.length)
+                    console.log(result.length)
                     req.session.loginstate = 'true';
                     res.end(JSON.stringify({err:false, result:result}));
                 }

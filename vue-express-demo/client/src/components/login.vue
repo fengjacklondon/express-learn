@@ -2,7 +2,7 @@
 <div class="col-lg-6 text-center">
   <form  class="form-horizontal">
     <div class="form-group">
-      <label for="exampleInputName">Name</label>
+      <label for="exampleInputName">{{loginState}}</label>
       <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" v-model="user.name">
     </div>
      <div class="form-group">
@@ -29,7 +29,7 @@
  }
 </style>
 <script>
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -39,6 +39,9 @@ export default {
       }
     }
   },
+  computed: mapState({
+    loginState: state => state.loginState
+  }),
   methods: {
     login: function () {
       console.log('6666')

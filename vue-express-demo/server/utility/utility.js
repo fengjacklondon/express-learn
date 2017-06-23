@@ -12,7 +12,7 @@ var archiver = require('archiver');
 var obectValues = function obectValues(object){
   var values = []
   for (var pro in values){
-    values.push(mysql.esecapse(object[pro]))
+    values.push(mysql.escape(object[pro]))
   }
   return values
 }
@@ -26,10 +26,15 @@ var obectValues = function obectValues(object){
  *  ["a = 1", " b = \"123\""]
  */
 var objConvertArray = function objConvertArray(object){
+  console.log('start convert'+object)
   var values = []
-  for( var pro in values){
-    values.push(pro+'='+mysql.esecapse(object[pro]));
+  for( var pro in object){
+    console.log('zhi'+object[pro])
+    console.log(mysql.escape(object[pro]))
+    console.log('loop'+pro)
+    values.push(pro+' = '+mysql.escape(object[pro]));
   }
+  console.log('输出转义结果'+values)
   return values
 }
 
@@ -44,7 +49,7 @@ var objConvertArray = function objConvertArray(object){
 
 var objectEscape = function objectEscape (object){
   for(var pro in  object) {
-    object[pro]=mysql.esecapse(object[pro])
+    object[pro]=mysql.escape(object[pro])
   }
   return object
 }
