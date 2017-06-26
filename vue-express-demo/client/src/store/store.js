@@ -7,9 +7,11 @@ export default new Vuex.Store({
   state: {
     parentNavItem: {text: '文章', link: '/article'},
     childNavItem: {text: '全部', link: '#'},
+    loginState: false,
     msg: 'kkk',
     msgType: 'info',
-    loginState: false,
+    msgBoxIsShow: false,
+    msgText: '',
     count: '9999',
     conf: {
       website: {
@@ -30,6 +32,11 @@ export default new Vuex.Store({
     },
     login (context, user) {
       context.commit('login', user)
+       /* 这里是登录后的跳转 可以 crud 用户，文章，专题，评论 */
+      context.commit('getBlogState', 1)
+      if (!context.state.loginState) {
+        context.commit('showMessage', {type: 'err', text: '登录失败'})
+      }
     }
   },
   mutations: {
@@ -57,6 +64,28 @@ export default new Vuex.Store({
           state.msgType = 'err'
         }
       })
+    },
+
+    getBlogState (state, days) {
+      console.log('store getBlogState' + days)
+      Vue.http.get(`/api?action=blog-state&days=${days}`).then((response) => {
+        var data = response.body
+        if (!data.err) {
+          console.log(data.result.visitorCount)
+          state.blogState[1].value = data.result.visitorCount
+          state.blogState[2].value = data.result.discussCount
+          console.log(JSON.stringify(state.blogState))
+        }
+      })
+    },
+    showMessage (state, message) {
+      console.log('show message')
+      state.msgBoxIsShow = true
+      state.msgType = message.type
+      state.msgText = message.text
+      setTimeout(function () {
+        state.msgBoxIsShow = false
+      }, 2000)
     }
   }
 })

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Navigation from '@/components/Navigation'
-import Sider from '@/components/Sider'
+import Sider from '@/components/SidebarMenu'
 import Login from '@/components/Login'
 
 Vue.use(Router)
