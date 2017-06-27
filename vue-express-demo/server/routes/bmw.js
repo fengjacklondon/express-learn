@@ -4,10 +4,12 @@ var session = require ('express-session')
 var md5 = require('md5')
 var db = require('../service/db.js') 
 var utility = require('../utility/utility.js')
+var visitor = require('../service/visitor')
 var sql = 'select count(*) as count from tb_user'  
 var user = require('../service/user.js')
+var discuss = require('../service/discuss')
 
-router.get('/', (req, res) => {
+router.get('/', (req, res,next) => {
     if(req.session.loginstate == 'true'){
         return next() 
     }
@@ -44,6 +46,7 @@ router.get('/', (req, res) => {
 }) 
 
 router.get('/', function(req,res){
+    console.log('the next is come in ')
     var params =req.query
     switch(params.action){
         case 'user-login':

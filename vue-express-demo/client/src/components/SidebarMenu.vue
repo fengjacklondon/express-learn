@@ -2,8 +2,8 @@
 <div id="div-siderbadmenu">
   <ul class="nav nav-pills nav-stacked">
       <li class="nav-item" v-for="menuItem in menu">
-        <a href="#" class="nav-link" : class="{'active': isActivite(menuItem)}" @click="setActiveMenuItem(menuItem)">
-          <i class="fa fa-2x" : class="menuItem.icon" aria-hidden="true"></i>
+        <a href="#"  class="nav-link" :class="{'active':isActivite(menuItem)}" @click="setActiveMenuItem(menuItem)">
+          <i class="fa fa-2x" :class="menuItem.icon" aria-hidden="true"></i>
           {{menuItem.text}}
         </a>
       </li>

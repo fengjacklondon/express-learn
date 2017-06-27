@@ -28,21 +28,21 @@
 </template>
 
 <script>
-import { mapState} from 'vuex'
-import SideBar from './SiderbarMenu.vue'
+import { mapState } from 'vuex'
+import SideBar from './SidebarMenu.vue'
 import DashBoard from './Dashboard'
 import Userlist from './Userlist.vue'
-import Articlelist from  './Articlelist.vue'
-import FeatureList from  './FeatureList.vue'
-import Discusslist from   './Discusslist.vue'
-import Visitorlist from  './Visitorlist.vue'
-import  System from  './System.vue'
+import Articlelist from './Articlelist.vue'
+import FeatureList from './FeatureList.vue'
+import Discusslist from './Discusslist.vue'
+import Visitorlist from './Visitorlist.vue'
+import System from './System.vue'
 export default {
-  computed: mapState ({
-    isShow: state => (state.parentNavItem.text == '管理' ) && (state.loginState)
+  computed: mapState({
+    isShow: state => (state.parentNavItem.text === '管理') && (state.loginState)
   }),
   components: {
-    SideBar, DashBoard, Userlist, Articlelist, FeatureList, Discusslist , Visitorlist, System
+    SideBar, DashBoard, Userlist, Articlelist, FeatureList, Discusslist, Visitorlist, System
   }
 }
 </script>

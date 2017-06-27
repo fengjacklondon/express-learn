@@ -5,6 +5,7 @@ Vue.use(VueResource)
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
+    manageParentNavItem: {text: '仪表盘'},
     parentNavItem: {text: '文章', link: '/article'},
     childNavItem: {text: '全部', link: '#'},
     loginState: false,
@@ -13,6 +14,11 @@ export default new Vuex.Store({
     msgBoxIsShow: false,
     msgText: '',
     count: '9999',
+    blogState: [
+      {icon: 'fa-rss', title: '新订阅', value: '0', style: {color: '#006DE0'}},
+      {icon: 'fa-users', title: '新访客', value: '0', style: {color: '#429AFE'}},
+      {icon: 'fa-commenting', title: '新评论', value: '0', style: {color: '#03D1FF'}}
+    ],
     conf: {
       website: {
         title: '喜剧之王'
