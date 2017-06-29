@@ -14,6 +14,7 @@ export default new Vuex.Store({
     msgBoxIsShow: false,
     msgText: '',
     count: '9999',
+    userList: '',
     blogState: [
       {icon: 'fa-rss', title: '新订阅', value: '0', style: {color: '#006DE0'}},
       {icon: 'fa-users', title: '新访客', value: '0', style: {color: '#429AFE'}},
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     parentNavItemChange (context, parentNavItem) {
       context.commit('parentNavItemChange', parentNavItem)
     },
+    manageParentNavItemChange (context, manageParentNavItem) {
+      context.commit('manageParentNavItemChange', manageParentNavItem)
+    },
     count (context) {
       console.log('575775')
       Vue.http.get('/api').then((response) => {
@@ -43,7 +47,18 @@ export default new Vuex.Store({
       if (!context.state.loginState) {
         context.commit('showMessage', {type: 'err', text: '登录失败'})
       }
+    },
+    userListPageChange (context, page) {
+      context.commit('userListPageChange', page)
+    },
+    childNavItemChange (context, childNavItem) {
+      context.commit('childNavItemChange', childNavItem)
+    },
+    getBlogState (context, days) {
+      console.log(' 获取博客状态')
+      context.commit('getBlogState', days)
     }
+
   },
   mutations: {
     parentNavItemChange (state, parentNavItem) {
@@ -71,7 +86,6 @@ export default new Vuex.Store({
         }
       })
     },
-
     getBlogState (state, days) {
       console.log('store getBlogState' + days)
       Vue.http.get(`/api?action=blog-state&days=${days}`).then((response) => {
@@ -92,6 +106,27 @@ export default new Vuex.Store({
       setTimeout(function () {
         state.msgBoxIsShow = false
       }, 2000)
+    },
+    userListPageChange (state, page) {
+      var from = (page - 1) * state.userPerPage
+      var count = state.userPerPage
+      Vue.http.get(`/api?action=user-range&from=${from}&count=${count}`).then((response) => {
+        var data = response.body
+        if (data.err && data.result.length) {
+          state.userCurrentPage = page
+          state.userList = data.result
+        } else {
+          console.assert(state.debug, '获取用户数据失败')
+        }
+      })
+    },
+    childNavItemChange (state, childNavItem) {
+      state.childNavItem = childNavItem
+    },
+    manageParentNavItemChange (state, manageParentNavItem) {
+      state.manageParentNavItem = manageParentNavItem
     }
   }
+
 })
+
