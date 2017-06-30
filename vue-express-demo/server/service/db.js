@@ -65,5 +65,16 @@ db.search = function (table,fields,condition,range,callback){
 }
 
 
+db.list = function (table, fields, range, callback) {
+  if(!range)
+    sqlString = `select ${fields}  from ${table}`
+  else
+    sqlString = `select ${fields} from ${table} limit ${range.from}, ${range.count}`
+  this.query (sqlString, function (err, result){
+    callback(err, result)
+  })
+}
+
+
 
 module.exports = db; 

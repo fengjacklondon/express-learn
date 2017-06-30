@@ -72,6 +72,18 @@ router.get('/', function(req,res){
             res.end(JSON.stringify({err:true, result:'error'})) 
           }) 
           break 
+          case 'user-range':
+          console.log('执行 get user-range')
+          var range = {from :Number(params.from), count: Number(params.count)}
+          var fields = 'name, nickname, authority, timeCreate'
+          user.list(fields, range, (err,result) => {
+            
+            if(!err){
+              res.end(JSON.stringify({err: false, result: result}))
+            } else {
+              res.end(JSON.stringify({err: true, result: 'error'}))
+            }
+          })
           default:
           res.end(JSON.stringify({err:true, result:'undefined request action'})) 
           break 

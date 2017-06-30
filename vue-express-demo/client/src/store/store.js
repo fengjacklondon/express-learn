@@ -12,6 +12,7 @@ export default new Vuex.Store({
     msg: 'kkk',
     msgType: 'info',
     msgBoxIsShow: false,
+    userPerPage: 6,
     msgText: '',
     count: '9999',
     userList: '',
