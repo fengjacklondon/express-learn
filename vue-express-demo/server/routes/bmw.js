@@ -84,6 +84,7 @@ router.get('/', function(req,res){
               res.end(JSON.stringify({err: true, result: 'error'}))
             }
           })
+          break
           default:
           res.end(JSON.stringify({err:true, result:'undefined request action'})) 
           break 

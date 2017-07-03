@@ -25,6 +25,9 @@ export default new Vuex.Store({
       website: {
         title: '喜剧之王'
       }
+    },
+    userCurrent: {
+      name: '', nickname: '', password: '', quertion: '', anser: '', authority: ''
     }
   },
   actions: {
@@ -58,6 +61,15 @@ export default new Vuex.Store({
     getBlogState (context, days) {
       console.log(' 获取博客状态')
       context.commit('getBlogState', days)
+    },
+    userCardChange (context, userCard) {
+      context.commit('userCardChange', userCard)
+    },
+    updateUser () {
+
+    },
+    addUser () {
+      
     }
 
   },
@@ -113,7 +125,8 @@ export default new Vuex.Store({
       var count = state.userPerPage
       Vue.http.get(`/api?action=user-range&from=${from}&count=${count}`).then((response) => {
         var data = response.body
-        if (data.err && data.result.length) {
+        console.log('user data:' + data)
+        if (!data.err && data.result.length) {
           state.userCurrentPage = page
           state.userList = data.result
         } else {
@@ -126,8 +139,10 @@ export default new Vuex.Store({
     },
     manageParentNavItemChange (state, manageParentNavItem) {
       state.manageParentNavItem = manageParentNavItem
+    },
+    userCardChange (state, userCard) {
+      state.userCurrent = userCard
     }
   }
-
 })
 
