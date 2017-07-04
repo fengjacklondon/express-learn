@@ -91,6 +91,43 @@ router.get('/', function(req,res){
     }
 })
 
+/**
+ * 管理员提交信息
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
+router.put('/', function(req, res)) {
+  if (req.sesison.loginstate != 'true') {
+    return res.end(JSON.stringify({err: true, result: '未登录无权限编辑'}))
+  }
+
+  var params = req.query
+  switch (params.action) {
+    case 'user-add':
+    var newUser = req.body.user
+    newUser.password = md5(newUser.password)
+    user.add(newUser, (err,result) => {
+      if (!err)
+        res.end(JSON.stringify({err: false, result: newUser.name}))
+      else 
+        res.end(JSON.stringify({err: true, result: 'edit user wrong'))
+    })
+
+    break
+    case 'user-edit':
+    var newUser = req.body.user
+    user.edit(newUser, (err, result) => {
+      if(!err)
+        res.end(JSON.stringify({err: false, result: true}))
+      else 
+        res.end(JSON.stringify({err: true, result: 'edit user wrong '}))
+    })
+    default :
+    break
+  }
+}
+
 
 
 // router.get('/', (req, res) => {

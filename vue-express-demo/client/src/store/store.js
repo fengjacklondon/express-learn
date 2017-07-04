@@ -65,11 +65,16 @@ export default new Vuex.Store({
     userCardChange (context, userCard) {
       context.commit('userCardChange', userCard)
     },
-    updateUser () {
-
+    updateUser (context, user) {
+      context.commit('updateUser', user)
+      if (context.state.msgType === 'success') {
+        context.commit('showMessage', {type: 'success', text: '修改用户成功'})
+      } else {
+        context.commit('showMessage' {type: 'err', text: '修改用户失败'})
+      }
     },
-    addUser () {
-      
+    addUser (context, user) {
+      comtext.comtext('addUser', user)
     }
 
   },
@@ -142,6 +147,22 @@ export default new Vuex.Store({
     },
     userCardChange (state, userCard) {
       state.userCurrent = userCard
+    },
+    updateUser (state, user) {
+      Vue.http.put(`api?action=user-edit`, {user: user}).then((response) => {
+        var data = response.body
+        if(!data.err){
+          state.msgType = 'success'
+        }
+      })
+    },
+    addUser (state, user) {
+      Vue.http.put(`api?action=user-add`,{user: user}).then((response) => {
+        var data = response.body
+        if(!data.err){
+          state.msgType = 'success'
+        }
+      })
     }
   }
 })

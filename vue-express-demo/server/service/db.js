@@ -76,5 +76,13 @@ db.list = function (table, fields, range, callback) {
 }
 
 
+db.update = function (table, values, condition, callback) {
+  var valuesString = utility.obj2array(values).join(' , ')
+  var sqlString = `UPDATE ${table} SET ${valuesString} WHERE ${condition} ;`
+  query(sqlString, (err, result)=> {
+    callback(err || !result.affectedRows, result)
+  })
+}
+
 
 module.exports = db; 
