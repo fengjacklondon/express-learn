@@ -9,13 +9,13 @@
     </fieldset>
     <fieldset class="form-group col-lg-10" v-show="!isUpdate()">
       <small class="text-muted">密码</small>
-      <input type="passoword"  class="form-control" placeholder="密码" v-model="newUser.passoword">
+      <input type="passoword"  class="form-control" placeholder="密码" v-model="newUser.password">
       <small class="text-muted">确认密码</small>
       <input type="passoword" class="form-control"   placeholder="再次输入密码">
       <small class="text-muted">问题</small>
       <input type="text" class="form-control"  placeholder="密保问题" v-model="newUser.question">
       <small class="text-muted">答案</small>
-      <input type="text"  class="form-control" placeholder="密码答案" v-model="newUser.answer">
+      <input type="text"  class="form-control" placeholder="密码答案" v-model="newUser.anser">
     </fieldset>
 
     <fieldset class="form-group col-lg-5">
@@ -40,14 +40,17 @@
       newUser: state => state.userCurrent
     }),
     methods: {
+      // 确认下   state 发生了变化， method方法 会不会变化
       isUpdate: function () {
-        return this.$store.state.isUpdate
+        console.log('是否调用了这个更新方法' + this.$store.state.isUserUpdate)
+        return this.$store.state.isUserUpdate
       },
       editUser: function () {
-        if (this.isUpdate) {
+        if (this.isUpdate()) {
           console.log('更新')
           this.$store.dispatch('updateUser', this.newUser)
         } else {
+          console.log('新增')
           this.$store.dispatch('addUser', this.newUser)
         }
       }

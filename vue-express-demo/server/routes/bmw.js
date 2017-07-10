@@ -97,8 +97,10 @@ router.get('/', function(req,res){
  * @param  {[type]}
  * @return {[type]}
  */
-router.put('/', function(req, res)) {
-  if (req.sesison.loginstate != 'true') {
+
+router.put('/', function(req, res){
+  // 单词拼错了 。。
+  if (req.session.loginstate != 'true') {
     return res.end(JSON.stringify({err: true, result: '未登录无权限编辑'}))
   }
 
@@ -106,12 +108,13 @@ router.put('/', function(req, res)) {
   switch (params.action) {
     case 'user-add':
     var newUser = req.body.user
+    console.log('用户密码加密前' + newUser.password )
     newUser.password = md5(newUser.password)
     user.add(newUser, (err,result) => {
       if (!err)
         res.end(JSON.stringify({err: false, result: newUser.name}))
       else 
-        res.end(JSON.stringify({err: true, result: 'edit user wrong'))
+        res.end(JSON.stringify({err: true, result: 'add user wrong'}))
     })
 
     break
@@ -123,10 +126,18 @@ router.put('/', function(req, res)) {
       else 
         res.end(JSON.stringify({err: true, result: 'edit user wrong '}))
     })
+    case 'user-del':
+    var condition = 'name = ' + utility.escape(req.body.name)
+    user.del(condition, (err, result) => {
+      if (!err)
+        res.end(JSON.stringify({err: false, result: true}))
+      else
+        res.end(JSON.stringify({err: true, result: 'delete user wrong '}))
+    } )
     default :
     break
   }
-}
+})
 
 
 

@@ -1,3 +1,4 @@
+var utility = require('../utility/utility.js')
 var db    = {};  
 var mysql = require('mysql');  
 var pool  = mysql.createPool({  
@@ -32,6 +33,9 @@ db.query = function (sql,callback){
   {
     if(!err){
       connection.query(sql, function(err, result){
+          console.log('最后的db_sql结果' + sql )
+          console.log('最后的db_err结果' + err )
+          console.log('最后的db_result结果' + result )
           connection.release()
           callback(err,result)
       })
@@ -52,7 +56,6 @@ db.query = function (sql,callback){
  */
 db.search = function (table,fields,condition,range,callback){
   var sqlString = '';
-  console.log('dbdbdbdbd')
   if(range){
     sqlString = `select ${fields}  from  ${table} where ${condition} limit ${range.from}, ${range.count} ; `
   }else{
@@ -77,12 +80,22 @@ db.list = function (table, fields, range, callback) {
 
 
 db.update = function (table, values, condition, callback) {
-  var valuesString = utility.obj2array(values).join(' , ')
+  var valuesString = utility.objConvertArray(values).join(' , ')
   var sqlString = `UPDATE ${table} SET ${valuesString} WHERE ${condition} ;`
-  query(sqlString, (err, result)=> {
+  this.query(sqlString, (err, result)=> {
+    console.log('update user : ' + sqlString)
+      console.log('update user : ' + err + result)
     callback(err || !result.affectedRows, result)
   })
 }
 
+
+db.del = function (table, condition, callback) {
+  var sqlString = `delete from ${table} where ${condition} ;`
+  console.log('delete user : ' + sqlString)
+  this.query(sqlString, (err, result) => {
+    callback (err || !result.affectedRows, result )
+  })
+}
 
 module.exports = db; 

@@ -28,7 +28,8 @@ export default new Vuex.Store({
     },
     userCurrent: {
       name: '', nickname: '', password: '', quertion: '', anser: '', authority: ''
-    }
+    },
+    isUserUpdate: false
   },
   actions: {
     parentNavItemChange (context, parentNavItem) {
@@ -70,11 +71,14 @@ export default new Vuex.Store({
       if (context.state.msgType === 'success') {
         context.commit('showMessage', {type: 'success', text: '修改用户成功'})
       } else {
-        context.commit('showMessage' {type: 'err', text: '修改用户失败'})
+        context.commit('showMessage', {type: 'err', text: '修改用户失败'})
       }
     },
     addUser (context, user) {
-      comtext.comtext('addUser', user)
+      context.commit('addUser', user)
+    },
+    delUser (context, username) {
+      context.commit('delUser', username)
     }
 
   },
@@ -151,15 +155,23 @@ export default new Vuex.Store({
     updateUser (state, user) {
       Vue.http.put(`api?action=user-edit`, {user: user}).then((response) => {
         var data = response.body
-        if(!data.err){
+        if (!data.err) {
           state.msgType = 'success'
         }
       })
     },
     addUser (state, user) {
-      Vue.http.put(`api?action=user-add`,{user: user}).then((response) => {
+      Vue.http.put(`api?action=user-add`, {user: user}).then((response) => {
         var data = response.body
-        if(!data.err){
+        if (!data.err) {
+          state.msgType = 'success'
+        }
+      })
+    },
+    delUser (state, name) {
+      Vue.http.put(`api?action=user-del`, {name: name}).then((response) => {
+        var data = response.body
+        if (!data.err) {
           state.msgType = 'success'
         }
       })

@@ -15,12 +15,12 @@
           <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle btn-sm"  data-toggle="dropdown"><i class="fa fa-1x fa-cog"></i></button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="#" >
                 <i class="fa fa-1x fa-eye"></i>
                 预览
               </a>
-              <a class="dropdown-item"><i class="fa fa-1x fa-pencil-square-o"></i>编辑</a>
-              <a class="dropdown-item"><i class="fa fa-1x fa-times"></i>删除</a>
+              <a class="dropdown-item" @click="editUser(userItem)"><i class="fa fa-1x fa-pencil-square-o"></i>编辑</a>
+              <a class="dropdown-item" @click="delUser(userItem.name)"><i class="fa fa-1x fa-times"></i>删除</a>
             </div>
           </div>
         </li>
@@ -53,7 +53,7 @@ export default {
       this.$store.state.isUserUpdate = false
       this.currentToolbar = 'add'
       this.$store.dispatch('userCardChange', {
-        id: 0, author: '', contact: '', discussID: '', timeCreate: '', content: '', type: '', state: '', mask: '', tyupe: ''
+        id: 0, author: '', contact: '', discussID: '', timeCreate: '', content: '', type: '', state: '', mask: ''
       })
     },
     del: function () {

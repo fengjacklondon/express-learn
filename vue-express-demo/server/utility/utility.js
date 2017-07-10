@@ -63,7 +63,7 @@ var objectEscape = function objectEscape (object){
  *  '\"abc\"'
  */
 var escape = function escape (value){
-   return msyql.escape(value)
+   return mysql.escape(value)
 }
 
 
@@ -77,8 +77,6 @@ var compress = function compress (glob, outFile){
   archiver.finalize();
 
 }
-
-
 exports.obectValues = obectValues
 exports.objConvertArray = objConvertArray
 exports.objectEscape = objectEscape
