@@ -80,6 +80,7 @@ db.list = function (table, fields, range, callback) {
 
 
 db.update = function (table, values, condition, callback) {
+  console.log('传入的更新值重点看看' + values)
   var valuesString = utility.objConvertArray(values).join(' , ')
   var sqlString = `UPDATE ${table} SET ${valuesString} WHERE ${condition} ;`
   this.query(sqlString, (err, result)=> {

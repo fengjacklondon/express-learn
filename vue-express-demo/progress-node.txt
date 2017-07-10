@@ -19,3 +19,13 @@ session 拼写错误。。。。mmp
 上下推导，到最内层，打印sql log
 发现有个字段是未定义的
 
+
+3sql 时间不正确
+
+格式转换
+
+npm install moment --save
+
+moment = require('moment')
+ 
+console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'))

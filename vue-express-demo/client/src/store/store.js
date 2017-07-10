@@ -27,7 +27,7 @@ export default new Vuex.Store({
       }
     },
     userCurrent: {
-      name: '', nickname: '', password: '', quertion: '', anser: '', authority: ''
+      name: '', nickname: '', password: '', quertion: '', anser: '', authority: '', timeCreate: ''
     },
     isUserUpdate: false
   },
@@ -67,6 +67,7 @@ export default new Vuex.Store({
       context.commit('userCardChange', userCard)
     },
     updateUser (context, user) {
+      console.log('store updateuser  userInfo:' + user)
       context.commit('updateUser', user)
       if (context.state.msgType === 'success') {
         context.commit('showMessage', {type: 'success', text: '修改用户成功'})

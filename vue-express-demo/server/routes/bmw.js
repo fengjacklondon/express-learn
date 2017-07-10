@@ -8,6 +8,7 @@ var visitor = require('../service/visitor')
 var sql = 'select count(*) as count from tb_user'  
 var user = require('../service/user.js')
 var discuss = require('../service/discuss')
+var moment = require('moment')
 
 router.get('/', (req, res,next) => {
     if(req.session.loginstate == 'true'){
@@ -120,6 +121,8 @@ router.put('/', function(req, res){
     break
     case 'user-edit':
     var newUser = req.body.user
+    newUser.timeCreate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    console.log('更新初始参数值：' + JSON.stringify(newUser));
     user.edit(newUser, (err, result) => {
       if(!err)
         res.end(JSON.stringify({err: false, result: true}))
