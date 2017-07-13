@@ -1,6 +1,6 @@
 <template>
-<div id="div-manager-userlist">
-  <div id="manage-userlist-toolbar" v-show="isShow" >
+<div id="div-manager-userlist" v-show="isShow" >
+  <div id="manage-userlist-toolbar" >
       <button  type="submit" class="btn btn-primary" @click="all">全部&nbsp;<em class="fa fa-list" aria-hidden="true"></em></button>
       <button  type="submit" class="btn btn-primary" @click="add">增加&nbsp;<b class="fa fa-plus-circle"></b></button>
       <button  type="submit" class="btn btn-primary" @click="del">删除&nbsp<i class="fa fa-times"></i></button>

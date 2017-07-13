@@ -29,7 +29,23 @@ export default new Vuex.Store({
     userCurrent: {
       name: '', nickname: '', password: '', quertion: '', anser: '', authority: '', timeCreate: ''
     },
-    isUserUpdate: false
+    isUserUpdate: false,
+    articleCurrent: {
+      id: '',
+      featureID: '',
+      title: '',
+      subtitle: '',
+      link: '',
+      author: '',
+      introduction: '',
+      coverLink: '',
+      content: '',
+      countRead: 0,
+      countShare: 0,
+      countDiscuss: 0,
+      labels: ''
+    },
+    isArticleUpdate: false
   },
   actions: {
     parentNavItemChange (context, parentNavItem) {
@@ -65,6 +81,9 @@ export default new Vuex.Store({
     },
     userCardChange (context, userCard) {
       context.commit('userCardChange', userCard)
+    },
+    articleCardListPageChange (context, userCard) {
+      context.commit('articleCardListPageChange', userCard)
     },
     updateUser (context, user) {
       console.log('store updateuser  userInfo:' + user)
@@ -141,6 +160,20 @@ export default new Vuex.Store({
           state.userList = data.result
         } else {
           console.assert(state.debug, '获取用户数据失败')
+        }
+      })
+    },
+    articleCardListPageChange (state, page) {
+      var from = (page - 1) * state.articlePerPage
+      var count = state.articlePerPage
+      Vue.http.get(`/api?action=article-range&from=${from}$count=${count}`).then((response) => {
+        var data = response.body
+        console.log('user data:' + data)
+        if (!data.err && data.result.length) {
+          state.userCurrentPage = page
+          state.userList = data.result
+        } else {
+          console.assert(state.debug, '获取文章信息失败')
         }
       })
     },
