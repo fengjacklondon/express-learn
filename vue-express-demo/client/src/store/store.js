@@ -99,6 +99,12 @@ export default new Vuex.Store({
     },
     delUser (context, username) {
       context.commit('delUser', username)
+    },
+    addArticle(context, article) {
+      context.commit('addArticle', article)
+    },
+    updateArticle(context, article) {
+      context.commit('updateArticle', article)
     }
 
   },
@@ -209,6 +215,23 @@ export default new Vuex.Store({
           state.msgType = 'success'
         }
       })
+    },
+    addArticle (state, article) {
+      Vue.http.put(`api?action=article-add`, {article: article}).then((response) => {
+        var data = response.body
+        if (!data.err) {
+          state.msgType = 'success'
+        }
+      })
+    },
+    updateArticle (state, article) {
+      Vue.http.put (`api?action=article-update`, {article: article}).then((response) => {
+        var data = response.body
+        if (!data.err) {
+          state.msgType = 'success'
+        }
+      })
+
     }
   }
 })
