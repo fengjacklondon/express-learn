@@ -10,6 +10,7 @@ var user = require('../service/user.js')
 var discuss = require('../service/discuss')
 var moment = require('moment')
 var article  = require('../service/article')
+var feature = require ('../service/feature')
 
 router.get('/', (req, res,next) => {
     if(req.session.loginstate == 'true'){
@@ -42,7 +43,6 @@ router.get('/', (req, res,next) => {
             default:
             res.end(JSON.stringify({err:true, result:'undefined request action'})) 
             break
-
     }
    
 }) 
@@ -130,6 +130,7 @@ router.put('/', function(req, res){
       else 
         res.end(JSON.stringify({err: true, result: 'edit user wrong '}))
     })
+    break
     case 'user-del':
     var condition = 'name = ' + utility.escape(req.body.name)
     user.del(condition, (err, result) => {
@@ -139,7 +140,7 @@ router.put('/', function(req, res){
         res.end(JSON.stringify({err: true, result: 'delete user wrong '}))
     } )
 
-
+    break
     case 'article-add':
     console.log('article add  coming ')
     var newArticle = req.body.article
@@ -148,23 +149,45 @@ router.put('/', function(req, res){
     newArticle.timeRelease = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+''+currentDate.getHours()+':'+currentDate.getMinutes()
     +':'+currentDate.getSeconds()
     article.add(newArticle, (err, result) =>{
-      if(!err){
+      if (!err) {
         res.end(JSON.stringify({err:false, result: newArticle}))
-      }else{
+      } else {
         res.end(JSON.stringify({err:true, result: 'add article wrong '}))
       }
     })
-
+    break
     case 'article-edit':
     var newArticle = req.body.article
     delete newArticle.timeCreated
     article.edit(newArticle, (err, result) =>{
-      if(!err){
+      if (!err) {
         res.end(JSON.stringify({err: false,result: true}))
-      }else{
+      } else {
         res.end(JSON.stringify({err:true, result:'edit article wrong'}))
       }
     })
+    break
+    case 'feature-add':
+    var newFeature = req.body.feature
+    feature.add(newFeature, (err, result) => {
+      if (!err) {
+        res.end(JSON.stringify({err: false, result: true}))
+      } else {
+        res.end(JSON.stringify({err: true, result: 'add feature wrong'}))
+      }
+    })
+    break
+    case 'feature-update':
+    var newFeature = req.body.feature
+    feature.update(newFeature ,(err,result) => {
+      if (!err) {
+        res.end(JSON.stringify({err: false, result: 'true'}))
+
+      } else {
+        res.end(JSON.stringify({err: true, result: 'false'}))
+      }
+    })
+    break
     default :
     break
   }

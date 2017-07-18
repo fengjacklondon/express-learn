@@ -5,6 +5,7 @@ Vue.use(VueResource)
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
+
     debug: true,
     manageParentNavItem: {text: '仪表盘'},
     parentNavItem: {text: '文章', link: '/article'},
@@ -120,6 +121,12 @@ export default new Vuex.Store({
     },
     featureCardChange (context, featureCard) {
       context.commit('featureCardChange', featureCard)
+    },
+    updateFeature (context, feature) {
+      context.commit('updateFeature', feature)
+    },
+    addFeature (context, feature) {
+      context.commit('addFeature', feature)
     }
 
   },
@@ -263,6 +270,22 @@ export default new Vuex.Store({
     },
     featureCardChange (state, featureCard) {
       state.featureCurrent = featureCard
+    },
+    updateFeature (state, feature) {
+      Vue.http.put(`api?action=feature-add`, {feature: feature}).then((response) => {
+        var data = response.body
+        if (!data.err) {
+          state.msgType = 'success'
+        }
+      })
+    },
+    addFeature (state, feature) {
+      Vue.http.put(`api?action=feature-update`, {feature: feature}).then((response) => {
+        var data = response.body
+        if (!data.err) {
+          state.msgType = 'success'
+        }
+      })
     }
   }
 })
