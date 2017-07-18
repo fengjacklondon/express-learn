@@ -5,6 +5,7 @@ Vue.use(VueResource)
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
+    debug: true,
     manageParentNavItem: {text: '仪表盘'},
     parentNavItem: {text: '文章', link: '/article'},
     childNavItem: {text: '全部', link: '#'},
@@ -45,7 +46,15 @@ export default new Vuex.Store({
       countDiscuss: 0,
       labels: ''
     },
-    isArticleUpdate: false
+    isArticleUpdate: false,
+    featureList: '',
+    featureCarList: '',
+    featurePerPage: 6,
+    featureCurrentPage: 1,
+    featureCurrent: {
+      id: '', title: '', timeCreate: '', author: '', introduction: '', countArticle: 0
+    },
+    isFeatureUpdate: false
   },
   actions: {
     parentNavItemChange (context, parentNavItem) {
@@ -85,6 +94,9 @@ export default new Vuex.Store({
     articleCardListPageChange (context, userCard) {
       context.commit('articleCardListPageChange', userCard)
     },
+    featureCardListPageChange (context, featureCard) {
+      context.commit('featureCardListPageChange', featureCard)
+    },
     updateUser (context, user) {
       console.log('store updateuser  userInfo:' + user)
       context.commit('updateUser', user)
@@ -100,11 +112,14 @@ export default new Vuex.Store({
     delUser (context, username) {
       context.commit('delUser', username)
     },
-    addArticle(context, article) {
+    addArticle (context, article) {
       context.commit('addArticle', article)
     },
-    updateArticle(context, article) {
+    updateArticle (context, article) {
       context.commit('updateArticle', article)
+    },
+    featureCardChange (context, featureCard) {
+      context.commit('featureCardChange', featureCard)
     }
 
   },
@@ -183,6 +198,20 @@ export default new Vuex.Store({
         }
       })
     },
+    featureCardListPageChange (state, page) {
+      var from = (page - 1) * state.featurePerPage
+      var count = state.featurePerPage
+      Vue.http.get(`api?action=feature-range&from=${from}$count=${count}`).then((response) => {
+        var data = response.body
+        console.log('feature data:' + data)
+        if (!data.err && data.result.length) {
+          state.featurePerPage = page
+          state.featureList = data.result
+        } else {
+          console.assert(state.debug, '获取专题数据失败')
+        }
+      })
+    },
     childNavItemChange (state, childNavItem) {
       state.childNavItem = childNavItem
     },
@@ -225,13 +254,15 @@ export default new Vuex.Store({
       })
     },
     updateArticle (state, article) {
-      Vue.http.put (`api?action=article-update`, {article: article}).then((response) => {
+      Vue.http.put(`api?action=article-update`, {article: article}).then((response) => {
         var data = response.body
         if (!data.err) {
           state.msgType = 'success'
         }
       })
-
+    },
+    featureCardChange (state, featureCard) {
+      state.featureCurrent = featureCard
     }
   }
 })

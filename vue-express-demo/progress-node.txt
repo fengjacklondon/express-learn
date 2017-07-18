@@ -29,3 +29,15 @@ npm install moment --save
 moment = require('moment')
  
 console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'))
+
+
+
+*************
+ Object properties must go on a new line if they aren't all on the same line
+
+
+
+2017年7月18日17:16:04
+专题新建 edit组件编写
+
+ 

@@ -9,6 +9,7 @@ var sql = 'select count(*) as count from tb_user'
 var user = require('../service/user.js')
 var discuss = require('../service/discuss')
 var moment = require('moment')
+var article  = require('../service/article')
 
 router.get('/', (req, res,next) => {
     if(req.session.loginstate == 'true'){
@@ -137,6 +138,33 @@ router.put('/', function(req, res){
       else
         res.end(JSON.stringify({err: true, result: 'delete user wrong '}))
     } )
+
+
+    case 'article-add':
+    console.log('article add  coming ')
+    var newArticle = req.body.article
+    var currentDate = new Date()
+    newArticle.license = ''
+    newArticle.timeRelease = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+''+currentDate.getHours()+':'+currentDate.getMinutes()
+    +':'+currentDate.getSeconds()
+    article.add(newArticle, (err, result) =>{
+      if(!err){
+        res.end(JSON.stringify({err:false, result: newArticle}))
+      }else{
+        res.end(JSON.stringify({err:true, result: 'add article wrong '}))
+      }
+    })
+
+    case 'article-edit':
+    var newArticle = req.body.article
+    delete newArticle.timeCreated
+    article.edit(newArticle, (err, result) =>{
+      if(!err){
+        res.end(JSON.stringify({err: false,result: true}))
+      }else{
+        res.end(JSON.stringify({err:true, result:'edit article wrong'}))
+      }
+    })
     default :
     break
   }
