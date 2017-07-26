@@ -49,7 +49,7 @@ export default new Vuex.Store({
     },
     isArticleUpdate: false,
     featureList: '',
-    featureCarList: '',
+    featureCardList: '',
     featurePerPage: 6,
     featureCurrentPage: 1,
     featureCurrent: {
@@ -206,14 +206,16 @@ export default new Vuex.Store({
       })
     },
     featureCardListPageChange (state, page) {
+      console.log('进入专题 mutattion' + page)
       var from = (page - 1) * state.featurePerPage
       var count = state.featurePerPage
-      Vue.http.get(`api?action=feature-range&from=${from}$count=${count}`).then((response) => {
+      console.log('分页查询' + from + '到' + count)
+      Vue.http.get(`feature?action=feature-range&from=${from}&count=${count}`).then((response) => {
         var data = response.body
         console.log('feature data:' + data)
         if (!data.err && data.result.length) {
           state.featurePerPage = page
-          state.featureList = data.result
+          state.featureCardList = data.result
         } else {
           console.assert(state.debug, '获取专题数据失败')
         }

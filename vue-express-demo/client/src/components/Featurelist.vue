@@ -8,7 +8,7 @@
     </div>
     <FeatureEdit v-show="currentToolbar == 'add' "></FeatureEdit>
     <ul class="list-group" v-show="currentToolbar !='add'">
-      <li class="list-group-item" v-for="featureItem in featureList" sytle="height: 50px;margin: 0 auto;">
+      <li class="list-group-item" v-for="featureItem in featureList" style="height: 50px;">
         <div class="col-lg-4">
           <a href="#"><i class="fa fa-1x fa-archive" aria-hidden="true"></i>{{featureItem.title}}</a>
         </div>
@@ -43,6 +43,16 @@
     current="featureCurrentPage" v-show="currentToolbar != 'add'"></Pagination>
   </div>
 </template>
+<style  type="text/css">
+  input {
+    display: inline
+  }
+
+  select
+{
+  height:30px; line-height:30px;
+}
+</style>
 <script >
  import {mapState} from 'vuex'
  import FeatureEdit from './FeatureEdit.vue'
@@ -69,11 +79,11 @@
        this.$store.dispatch('featureCardChange', this.$store.state.featureCurrent)
      },
      del: function () {
-       this.$store.dispatch('')
+       this.currentToolbar = 'del'
      },
      // 参数括号 与方法括号分开
      search: function () {
-
+       this.currentToolbar = 'search'
      },
      editFeature: function (feature) {
        this.$store.state.isFeatureEdit = true

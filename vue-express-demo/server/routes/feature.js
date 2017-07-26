@@ -4,13 +4,16 @@ var router = express.Router()
 var feature = require('../service/feature.js')
 
 router.get('/', function(req, res) {
+  console.log('come into  feature ')
   var params = req.query
   if (typeof(params.action) === 'undefined'){
     return  res.end(JSON.stringify({err: true, result: 'illegal request action'}))
   }
   switch (params.action) {
     case 'feature-range':
-    var range = {from: Nubmer(params.from), count: Nubmer(params.count)}
+    console.log('分页的参数' + params.from)
+    console.log('分页的结束' + params.count)
+    var range = {from: Number(params.from), count: Number(params.count)}
     var fields = `*`
     feature.list(fields, range, (err, result) =>{
       if (!err) {
@@ -28,11 +31,13 @@ router.get('/', function(req, res) {
       if(!err)
         res.end(JSON.stringify({err: false, result: result}))
       else 
-        res.end(JSON.stringify(err: true, result: 'get feature list error'))
+        res.end(JSON.stringify({err: true, result: 'get feature list error'}))
     })
     break
     default:
-    res.end (JSON.stringify({err: true, 'undefined request'}))
+    res.end (JSON.stringify({err: true, result:'undefined request'}))
+    break
+
   }
-}
+})
 module.exports = router

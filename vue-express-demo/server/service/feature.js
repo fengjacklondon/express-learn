@@ -30,7 +30,7 @@ var update = function update (values, callback){
 }
 
 var list = function list (fields, range, callback){
-  db.list(TABLE_FEATURE, fields, rang, callback)
+  db.list(TABLE_FEATURE, fields, range, callback)
 }
 
 var search = function search (fields, condition,range, callback){

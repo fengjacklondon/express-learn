@@ -4,7 +4,7 @@ var mysql = require('mysql');
 var pool  = mysql.createPool({  
   connectionLimit : 10,  
   host :'localhost',  
-  port :4706,
+  port :3306,
   user : 'root',  
   password : 'Wewechat',  
   database : 'db_blog'  

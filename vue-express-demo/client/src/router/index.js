@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Navigation from '@/components/Navigation'
-import Sider from '@/components/SidebarMenu'
+// import Sider from '@/components/SidebarMenu'
 import Login from '@/components/Login'
+import ArticleCardList from '@/components/ArticleCardList'
+import FeatureCardList from '@/components/FeatureCardList'
+import AboutMe from '@/components/AboutMe'
+import ContactMe from '@/components/ContactMe'
 
 Vue.use(Router)
 export default new Router({
@@ -10,11 +14,11 @@ export default new Router({
     { path: '/',
       component: Navigation,
       children: [
-      {path: 'article', component: Sider},
-      {path: 'feature', component: Sider},
+      {path: 'article', component: ArticleCardList},
+      {path: 'feature', component: FeatureCardList},
       {path: 'manage', component: Login},
-      {path: 'about', component: Sider},
-      {path: 'contact', component: Sider}
+      {path: 'about', component: AboutMe},
+      {path: 'contact', component: ContactMe}
 
       ]
     }
