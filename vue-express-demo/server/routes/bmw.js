@@ -167,6 +167,15 @@ router.put('/', function(req, res){
       }
     })
     break
+    case 'article-del':
+    var articleId = req.body.articleId
+    article.del (articleId, (err,result) => {
+      if (!err) {
+        res.end(JSON.stringify({err: false, result: true}))
+      } else {
+        res.end(JSON.stringify({err: true, result: 'edit article wrong'}))
+      }
+    })
     case 'feature-add':
     var newFeature = req.body.feature
     feature.add(newFeature, (err, result) => {

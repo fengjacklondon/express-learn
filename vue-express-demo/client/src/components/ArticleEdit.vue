@@ -76,6 +76,8 @@
         return this.$store.state.isArticleUpdate
       },
       editArticle: function () {
+        this.newArticle.timeRelease = new Date()
+        console.log('显示的时间是：' + new Date())
         if (this.isUpdate()) {
           console.log('更新文章')
           this.$store.dispatch('updateArticle', this.newArticle)

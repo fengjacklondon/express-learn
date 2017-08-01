@@ -1,7 +1,7 @@
 var conf = {
 	mysql:{
 			host	: '127.0.0.1',
- 			port	: 3306,
+ 			port	: 4706,
 			user	: 'root',
 			password: 'Wewechat',
 			database: 'db_blog',
@@ -12,6 +12,11 @@ var conf = {
 				TABLE_DISCUSS:'tb_discuss',
 				TABLE_VISITOR:'tb_visitor'
 			}
+	},
+	article:{
+		storePath: '/public/html/article',
+		templatePath: '/public/template/article.pug',
+		css: '2.css'
 	}
 };
 

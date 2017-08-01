@@ -26,6 +26,7 @@ export default new Vuex.Store({
     conf: {
       website: {
         title: '喜剧之王'
+
       }
     },
     userCurrent: {
@@ -47,6 +48,11 @@ export default new Vuex.Store({
       countDiscuss: 0,
       labels: ''
     },
+    articleCardList: '',
+    articlePerPage: 6,
+    articleCurrentPage: 1,
+    articleSearchCurrentPage: 1,
+    articleSearchText: '',
     isArticleUpdate: false,
     featureList: '',
     featureCardList: '',
@@ -93,6 +99,7 @@ export default new Vuex.Store({
       context.commit('userCardChange', userCard)
     },
     articleCardListPageChange (context, userCard) {
+      console.log('articleCard ')
       context.commit('articleCardListPageChange', userCard)
     },
     featureCardListPageChange (context, featureCard) {
@@ -119,6 +126,9 @@ export default new Vuex.Store({
     updateArticle (context, article) {
       context.commit('updateArticle', article)
     },
+    delArticle (context, articleId) {
+      context.commit('delArticle', articleId)
+    },
     featureCardChange (context, featureCard) {
       context.commit('featureCardChange', featureCard)
     },
@@ -127,6 +137,12 @@ export default new Vuex.Store({
     },
     addFeature (context, feature) {
       context.commit('addFeature', feature)
+    },
+    getFeatureList (context) {
+      context.commit('getFeatureList')
+    },
+    articleCardChange (context, articleCard) {
+      context.commit('articleCardChange', articleCard)
     }
 
   },
@@ -194,12 +210,13 @@ export default new Vuex.Store({
     articleCardListPageChange (state, page) {
       var from = (page - 1) * state.articlePerPage
       var count = state.articlePerPage
-      Vue.http.get(`/api?action=article-range&from=${from}$count=${count}`).then((response) => {
+      console.log('传递的页数是：' + from + count)
+      Vue.http.get(`/article?action=article-range&from=${from}&count=${count}`).then((response) => {
         var data = response.body
         console.log('user data:' + data)
         if (!data.err && data.result.length) {
-          state.userCurrentPage = page
-          state.userList = data.result
+          state.articleCurrentPage = page
+          state.articleCardList = data.result
         } else {
           console.assert(state.debug, '获取文章信息失败')
         }
@@ -229,6 +246,9 @@ export default new Vuex.Store({
     },
     userCardChange (state, userCard) {
       state.userCurrent = userCard
+    },
+    articleCardChange (state, articleCard) {
+      state.articleCurrent = articleCard
     },
     updateUser (state, user) {
       Vue.http.put(`api?action=user-edit`, {user: user}).then((response) => {
@@ -270,6 +290,14 @@ export default new Vuex.Store({
         }
       })
     },
+    delArticle (state, articleId) {
+      Vue.http.put(`api?action=article-del`, {articleId: articleId}).then((response) => {
+        var data = response.body
+        if (!data.err) {
+          state.msgType = 'success'
+        }
+      })
+    },
     featureCardChange (state, featureCard) {
       state.featureCurrent = featureCard
     },
@@ -286,6 +314,19 @@ export default new Vuex.Store({
         var data = response.body
         if (!data.err) {
           state.msgType = 'success'
+        }
+      })
+    },
+    getFeatureList (state) {
+      Vue.http.get(`feature?action=feature-list`).then((response) => {
+        console.assert(state.debug, response.body)
+        var data = response.body
+        if (!data.err && data.result.length) {
+          console.log('获取的专题数据是:' + data.result)
+          state.featureList = data.result
+          state.featureList.timeCreate = new Date(state.featureList.timeCreate)
+        } else {
+          console.assert(state.DEBUG, '获取专题数据失败')
         }
       })
     }

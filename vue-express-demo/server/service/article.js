@@ -12,13 +12,13 @@ var add = function add (article, callback) {
 	var values = utility.objectEscape(article)
 	var sqlString = `insert into ${TABLE_ARTICLE}
 	 (
-		featureID, title, subtitle, author, link, license, timeRelease, introduction, coverLink,
+		featureID, title, subtitle, author, link, license, introduction, coverLink,
 		content, labels
 
 	 )VALUES
 	 (
 	 	${values.featureID}, ${values.title}, ${values.subtitle} ,${values.author},
-	 	${values.link}, ${values.license}, ${values.timeRelease}, ${values.introduction}, 
+	 	${values.link}, ${values.license}, ${values.introduction}, 
 	 	${values.coverLink}, ${values.content}, ${values.labels}
 	 );`
 	 db.query(sqlString, function(err, result) {
@@ -62,7 +62,8 @@ var search = function search (fields, condition, range, callback) {
 }
 
 
-var del = function del (condition, callback){
+var del = function del (articleId, callback){
+	var condition = `id = ` + articleId
 	db.del(TABLE_ARTICLE, condition, callback)
 }
 
@@ -74,7 +75,7 @@ var del = function del (condition, callback){
 var renderToHTML =  function renderMD (article, callback) {
 	var rootPath = path.dirname(__dirname)
 	var articleConf = conf.article
-	var htmlpath = rootPath + articleConf.sorePath+'/'+article.link + '.html'
+	var htmlpath = rootPath + articleConf.storePath+'/'+article.link + '.html'
 	var mdhtml = markdown.toHTML(article.content)
 	var titlehtml = '<!DOCTYPE html><hmtl><head><mata charset="utf-8"><title>'+article.title+article.subtitle
 	var linkhtml = ' </title><link rel="stylesheet" type="text/css" href="stylesheets/'+articleConf.css+'"></head><body>'

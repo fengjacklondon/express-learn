@@ -33,6 +33,37 @@
       </div>
     </div>
 
+<ul class="list-group" v-show="currentToolbar !='add'">
+  <li class="list-group-item" v-for="articleItem in articleList" style="height: 50px; margin: 0 autp">
+    <div  class="col-lg-4">
+      <a href="#"> <i class="fa fa-1x fa-file"></i>{{articleItem.title + articleItem.subtitle}}</a>
+    </div>
+    <div class="col-lg-4">
+      <a href="#"><i class="fa fa-1x fa-user"></i>{{articleItem.author}}</a>
+    </div>
+    <span class="col-lg-2">
+      <a href="#"><i class="fa fa-1x fa-archive"></i>{{articleItem.featureID}}</a>
+    </span>
+    <div class="btn-group col-lg-1">
+      <button  type="button"  class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown" >
+        <i class="fa fa-1x fa-cog">          
+        </i>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">
+          <i class="fa fa-1x fa-eye"></i>预览
+        </a>  
+        <a  class="dropdown-item" href="#" data-toggle="modal" data-target="manage-edit--aticle" @click="editArticle(articleItem)">
+          <i class="fa fa-1x fa-pencil-square-o"></i>编辑
+        </a>
+        <a class="dropdown-item" href="#"  @click="delArticle(articleItem.id)">
+          <i class="fa fa-1x fa-times"></i>删除
+        </a>
+      </div>
+    </div>
+  </li>
+
+</ul>
     <Pagination parentshow="管理" childshow="文章" trigger="articleCardListpageChange" current="articleCurrentPage" v-show="currentToolbar != 'add'"></Pagination>   
   </div>
 </template>
@@ -47,6 +78,7 @@
       }
     },
     computed: mapState({
+      articleList: state => state.articleCardList,
       isShow: state => (state.parentNavItem.text === '管理') && (state.manageParentNavItem.text === '文章')
     }),
     components: {
@@ -54,11 +86,15 @@
     },
     methods: {
       all: function () {
-
+        this.currentToolbar = 'all'
       },
       add: function () {
         console.log(888)
+        this.$store.state.isArticleUpdate = false
+        // 取得专题的数据
+        this.$store.commit('getFeatureList')
         this.currentToolbar = 'add'
+        this.$store.dispatch('articleCardChange', {id: '', featureID: '', title: '', subtitle: '', link: '', author: '', introduction: '', coverLink: '', content: '', countRead: 0, countShare: 0, countDiscuss: 0, labels: ''})
       },
       del: function () {
 
@@ -69,8 +105,9 @@
       editArticle: function () {
 
       },
-      delArticle: function () {
-
+      delArticle: function (articleId) {
+        this.$store.dispatch('delArticle', articleId)
+        this.$store.dispatch('articleCardListPageChange', this.$store.state.articleCurrentPage)
       }
     }
   }
