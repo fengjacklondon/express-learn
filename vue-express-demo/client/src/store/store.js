@@ -138,6 +138,9 @@ export default new Vuex.Store({
     addFeature (context, feature) {
       context.commit('addFeature', feature)
     },
+    delFeature (context, featureId) {
+      context.commit('delFeature', featureId)
+    },
     getFeatureList (context) {
       context.commit('getFeatureList')
     },
@@ -223,6 +226,7 @@ export default new Vuex.Store({
       })
     },
     featureCardListPageChange (state, page) {
+      debugger
       console.log('进入专题 mutattion' + page)
       var from = (page - 1) * state.featurePerPage
       var count = state.featurePerPage
@@ -231,7 +235,7 @@ export default new Vuex.Store({
         var data = response.body
         console.log('feature data:' + data)
         if (!data.err && data.result.length) {
-          state.featurePerPage = page
+          state.featureCurrentPage = page
           state.featureCardList = data.result
         } else {
           console.assert(state.debug, '获取专题数据失败')
@@ -311,6 +315,14 @@ export default new Vuex.Store({
     },
     addFeature (state, feature) {
       Vue.http.put(`api?action=feature-update`, {feature: feature}).then((response) => {
+        var data = response.body
+        if (!data.err) {
+          state.msgType = 'success'
+        }
+      })
+    },
+    delFeature (state, featureId) {
+      Vue.http.put(`api?action=feature-del`, {featureId: featureId}).then((response) => {
         var data = response.body
         if (!data.err) {
           state.msgType = 'success'

@@ -197,6 +197,9 @@ router.put('/', function(req, res){
       }
     })
     break
+    case 'feature-del':
+    var  featureId = req.body.featureId
+    
     default :
     break
   }

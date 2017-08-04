@@ -87,6 +87,7 @@
     methods: {
       all: function () {
         this.currentToolbar = 'all'
+        this.$store.dispatch('articleCardListPageChange', 1)
       },
       add: function () {
         console.log(888)
